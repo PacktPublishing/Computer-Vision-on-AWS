@@ -1,0 +1,953 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.144"
+        }
+      },
+      "VideoContentModeration": {
+        "id": "VideoContentModeration",
+        "path": "VideoContentModeration",
+        "children": {
+          "Bucket": {
+            "id": "Bucket",
+            "path": "VideoContentModeration/Bucket",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "VideoContentModeration/Bucket/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
+                  "version": "2.49.0"
+                }
+              },
+              "Notifications": {
+                "id": "Notifications",
+                "path": "VideoContentModeration/Bucket/Notifications",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "VideoContentModeration/Bucket/Notifications/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.49.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.1.144"
+                }
+              },
+              "AllowBucketNotificationsToVideoContentModerationStartAnalysisFunctionD5F4D973": {
+                "id": "AllowBucketNotificationsToVideoContentModerationStartAnalysisFunctionD5F4D973",
+                "path": "VideoContentModeration/Bucket/AllowBucketNotificationsToVideoContentModerationStartAnalysisFunctionD5F4D973",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                  "aws:cdk:cloudformation:props": {
+                    "action": "lambda:InvokeFunction",
+                    "functionName": {
+                      "Fn::GetAtt": [
+                        "StartAnalysisFunction605FCF41",
+                        "Arn"
+                      ]
+                    },
+                    "principal": "s3.amazonaws.com",
+                    "sourceAccount": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "sourceArn": {
+                      "Fn::GetAtt": [
+                        "Bucket83908E77",
+                        "Arn"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.Bucket",
+              "version": "2.49.0"
+            }
+          },
+          "Topic": {
+            "id": "Topic",
+            "path": "VideoContentModeration/Topic",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "VideoContentModeration/Topic/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SNS::Topic",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sns.Topic",
+              "version": "2.49.0"
+            }
+          },
+          "AuditQueue": {
+            "id": "AuditQueue",
+            "path": "VideoContentModeration/AuditQueue",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "VideoContentModeration/AuditQueue/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SQS::Queue",
+                  "aws:cdk:cloudformation:props": {
+                    "messageRetentionPeriod": 604800
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sqs.CfnQueue",
+                  "version": "2.49.0"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "VideoContentModeration/AuditQueue/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "VideoContentModeration/AuditQueue/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SQS::QueuePolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sqs:SendMessage",
+                              "Condition": {
+                                "ArnEquals": {
+                                  "aws:SourceArn": {
+                                    "Ref": "TopicBFC7AF6E"
+                                  }
+                                }
+                              },
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "sns.amazonaws.com"
+                              },
+                              "Resource": {
+                                "Fn::GetAtt": [
+                                  "AuditQueue1D3C234B",
+                                  "Arn"
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "queues": [
+                          {
+                            "Ref": "AuditQueue1D3C234B"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sqs.CfnQueuePolicy",
+                      "version": "2.49.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sqs.QueuePolicy",
+                  "version": "2.49.0"
+                }
+              },
+              "VideoContentModerationTopicBBBE81C3": {
+                "id": "VideoContentModerationTopicBBBE81C3",
+                "path": "VideoContentModeration/AuditQueue/VideoContentModerationTopicBBBE81C3",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "VideoContentModeration/AuditQueue/VideoContentModerationTopicBBBE81C3/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SNS::Subscription",
+                      "aws:cdk:cloudformation:props": {
+                        "protocol": "sqs",
+                        "topicArn": {
+                          "Ref": "TopicBFC7AF6E"
+                        },
+                        "endpoint": {
+                          "Fn::GetAtt": [
+                            "AuditQueue1D3C234B",
+                            "Arn"
+                          ]
+                        },
+                        "rawMessageDelivery": true
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
+                      "version": "2.49.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.Subscription",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sqs.Queue",
+              "version": "2.49.0"
+            }
+          },
+          "RekognitionRole": {
+            "id": "RekognitionRole",
+            "path": "VideoContentModeration/RekognitionRole",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "VideoContentModeration/RekognitionRole/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "rekognition.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.49.0"
+                }
+              },
+              "DefaultPolicy": {
+                "id": "DefaultPolicy",
+                "path": "VideoContentModeration/RekognitionRole/DefaultPolicy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "VideoContentModeration/RekognitionRole/DefaultPolicy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sns:Publish",
+                              "Effect": "Allow",
+                              "Resource": {
+                                "Ref": "TopicBFC7AF6E"
+                              }
+                            },
+                            {
+                              "Action": [
+                                "s3:GetObject*",
+                                "s3:GetBucket*",
+                                "s3:List*"
+                              ],
+                              "Effect": "Allow",
+                              "Resource": [
+                                {
+                                  "Fn::GetAtt": [
+                                    "Bucket83908E77",
+                                    "Arn"
+                                  ]
+                                },
+                                {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      {
+                                        "Fn::GetAtt": [
+                                          "Bucket83908E77",
+                                          "Arn"
+                                        ]
+                                      },
+                                      "/*"
+                                    ]
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "policyName": "RekognitionRoleDefaultPolicyDCAE9C8E",
+                        "roles": [
+                          {
+                            "Ref": "RekognitionRole7EFA3C18"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                      "version": "2.49.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Policy",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.49.0"
+            }
+          },
+          "StartAnalysisFunction": {
+            "id": "StartAnalysisFunction",
+            "path": "VideoContentModeration/StartAnalysisFunction",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "VideoContentModeration/StartAnalysisFunction/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "VideoContentModeration/StartAnalysisFunction/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          },
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/AmazonRekognitionReadOnlyAccess"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.49.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "VideoContentModeration/StartAnalysisFunction/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "VideoContentModeration/StartAnalysisFunction/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "s3:GetObject*",
+                                    "s3:GetBucket*",
+                                    "s3:List*",
+                                    "s3:DeleteObject*",
+                                    "s3:PutObject",
+                                    "s3:PutObjectLegalHold",
+                                    "s3:PutObjectRetention",
+                                    "s3:PutObjectTagging",
+                                    "s3:PutObjectVersionTagging",
+                                    "s3:Abort*"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "Bucket83908E77",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          {
+                                            "Fn::GetAtt": [
+                                              "Bucket83908E77",
+                                              "Arn"
+                                            ]
+                                          },
+                                          "/*"
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "StartAnalysisFunctionServiceRoleDefaultPolicy0BECB2A7",
+                            "roles": [
+                              {
+                                "Ref": "StartAnalysisFunctionServiceRole723CB268"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.49.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.49.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.49.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "VideoContentModeration/StartAnalysisFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "zipFile": "import boto3\nfrom json import dumps\nfrom os import environ\nrekognition = boto3.client('rekognition')\n\nNOTIFICATION_CHANNEL_ROLEARN = environ.get('NOTIFICATION_CHANNEL_ROLEARN')\nNOTIFICATION_CHANNEL_SNSTOPIC_ARN = environ.get('NOTIFICATION_CHANNEL_SNSTOPIC_ARN')\n\ndef lambda_handler(event, context):\n    for record in event['Records']:\n        bucket = record['s3']['bucket']['name']\n        name = record['s3']['bucket']['object']['key']\n\n        print(\"StartContentModeration(s3://{}/{})\".format(\n            bucket,name))\n        moderation_job = rekognition.start_content_moderation(\n            NotificationChannel={\n                'RoleArn': NOTIFICATION_CHANNEL_ROLEARN,\n                'SNSTopicArn': NOTIFICATION_CHANNEL_SNSTOPIC_ARN\n            },\n            Video={\n                'S3Object':{\n                    'Bucket':bucket,\n                    'Name':name\n                }\n            })\n        print(dumps(moderation_job, indent=2))"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "StartAnalysisFunctionServiceRole723CB268",
+                        "Arn"
+                      ]
+                    },
+                    "architectures": [
+                      "x86_64"
+                    ],
+                    "environment": {
+                      "variables": {
+                        "BUCKET_NAME": {
+                          "Ref": "Bucket83908E77"
+                        },
+                        "NOTIFICATION_CHANNEL_ROLEARN": {
+                          "Fn::GetAtt": [
+                            "RekognitionRole7EFA3C18",
+                            "Arn"
+                          ]
+                        },
+                        "NOTIFICATION_CHANNEL_SNSTOPIC_ARN": {
+                          "Ref": "TopicBFC7AF6E"
+                        }
+                      }
+                    },
+                    "handler": "index.lambda_handler",
+                    "runtime": "python3.9"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.49.0"
+            }
+          },
+          "GetResultsFunction": {
+            "id": "GetResultsFunction",
+            "path": "VideoContentModeration/GetResultsFunction",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "VideoContentModeration/GetResultsFunction/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "VideoContentModeration/GetResultsFunction/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          },
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/AmazonRekognitionReadOnlyAccess"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.49.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "VideoContentModeration/GetResultsFunction/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "VideoContentModeration/GetResultsFunction/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "s3:GetObject*",
+                                    "s3:GetBucket*",
+                                    "s3:List*",
+                                    "s3:DeleteObject*",
+                                    "s3:PutObject",
+                                    "s3:PutObjectLegalHold",
+                                    "s3:PutObjectRetention",
+                                    "s3:PutObjectTagging",
+                                    "s3:PutObjectVersionTagging",
+                                    "s3:Abort*"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "Bucket83908E77",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          {
+                                            "Fn::GetAtt": [
+                                              "Bucket83908E77",
+                                              "Arn"
+                                            ]
+                                          },
+                                          "/*"
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "GetResultsFunctionServiceRoleDefaultPolicyCC07E8D1",
+                            "roles": [
+                              {
+                                "Ref": "GetResultsFunctionServiceRole14B0392F"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.49.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.49.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.49.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "VideoContentModeration/GetResultsFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "zipFile": "import os\nimport boto3\nfrom json import loads\n\nBUCKET_NAME = os.environ.get('BUCKET_NAME')\n\nrekognition = boto3.client('rekognition')\ncloudwatch = boto3.client('cloudwatch')\ndef get_complete_content_moderation_results(jobId):\n    next_token = None\n    complete_response = None\n    while True:\n        if next_token:\n            response = rekognition.get_content_moderation(            \n            JobId=jobId,\n            NextToken=next_token)        \n            complete_response['ModerationLabels'].extend(response['ModerationLabels'])\n        else:\n            response = rekognition.get_content_moderation(\n            JobId=jobId)\n            complete_response = response\n\n        if 'NextToken' in response:\n            next_token = response['NextToken']\n        else:\n            break\n    return complete_response\n\n\ndef get_frequency(notification):\n    moderation_results = get_complete_content_moderation_results(notification['JobId'])\n    parent_frequency = {}\n    for label in moderation_results['ModerationLabels']:\n        name = label['ModerationLabel']['Name']\n        parent = label['ModerationLabel']['ParentName']\n\n        if len(parent) == 0:\n            parent = 'TopLevel'\n        if len(name) == 0:\n            name = \"None\"\n\n        if parent not in parent_frequency:\n            parent_frequency[parent]= { name: 1 }\n        else:\n            if name not in parent_frequency[parent]:\n                parent_frequency[parent][name]=1\n            else:\n                parent_frequency[parent][name] += 1\n    return parent_frequency\n\ndef publish_metrics(frequency):\n    metric_data = []\n    for (parent,secondary) in frequency.items():\n        metric_data.append({\n            'MetricName':'ContentModeration',\n            'Dimensions': [\n                {\n                    'Name': 'TopLevel',\n                    'Value': str(parent),\n                }\n            ],\n            'Value': sum(secondary.values()),\n            'Unit':'Count',\n        })\n        for (name, count) in secondary.items():\n            metric_data.append({\n                'MetricName':'ContentModeration',\n                'Dimensions': [\n                    {\n                        'Name': 'TopLevel',\n                        'Value': str(parent),\n                        'Name': 'Secondary',\n                        'Value': str(name),\n                    }\n                ],\n                'Value': count,\n                'Unit':'Count',\n            })\n\n    cloudwatch.put_metric_data(\n        Namespace='VideoContentModeration',\n        MetricData=metric_data)\n\ndef lambda_handler(event,context):\n    print(event)\n    for record in event['Records']:\n        notification = loads(record['Sns']['Message'])\n        print(notification)\n        frequency = get_frequency(notification)\n        publish_metrics(frequency)\n\n"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "GetResultsFunctionServiceRole14B0392F",
+                        "Arn"
+                      ]
+                    },
+                    "architectures": [
+                      "x86_64"
+                    ],
+                    "environment": {
+                      "variables": {
+                        "BUCKET_NAME": {
+                          "Ref": "Bucket83908E77"
+                        }
+                      }
+                    },
+                    "handler": "index.lambda_handler",
+                    "runtime": "python3.9"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.49.0"
+                }
+              },
+              "AllowInvoke:VideoContentModerationTopicBBBE81C3": {
+                "id": "AllowInvoke:VideoContentModerationTopicBBBE81C3",
+                "path": "VideoContentModeration/GetResultsFunction/AllowInvoke:VideoContentModerationTopicBBBE81C3",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                  "aws:cdk:cloudformation:props": {
+                    "action": "lambda:InvokeFunction",
+                    "functionName": {
+                      "Fn::GetAtt": [
+                        "GetResultsFunction4147919F",
+                        "Arn"
+                      ]
+                    },
+                    "principal": "sns.amazonaws.com",
+                    "sourceArn": {
+                      "Ref": "TopicBFC7AF6E"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                  "version": "2.49.0"
+                }
+              },
+              "Topic": {
+                "id": "Topic",
+                "path": "VideoContentModeration/GetResultsFunction/Topic",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "VideoContentModeration/GetResultsFunction/Topic/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SNS::Subscription",
+                      "aws:cdk:cloudformation:props": {
+                        "protocol": "lambda",
+                        "topicArn": {
+                          "Ref": "TopicBFC7AF6E"
+                        },
+                        "endpoint": {
+                          "Fn::GetAtt": [
+                            "GetResultsFunction4147919F",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
+                      "version": "2.49.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.Subscription",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.49.0"
+            }
+          },
+          "NotificationChannel_RoleArn": {
+            "id": "NotificationChannel_RoleArn",
+            "path": "VideoContentModeration/NotificationChannel_RoleArn",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.49.0"
+            }
+          },
+          "NotificationChannelSNSTopicArn": {
+            "id": "NotificationChannelSNSTopicArn",
+            "path": "VideoContentModeration/NotificationChannelSNSTopicArn",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.49.0"
+            }
+          },
+          "VideoBucket": {
+            "id": "VideoBucket",
+            "path": "VideoContentModeration/VideoBucket",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.49.0"
+            }
+          },
+          "CloudWatchMetricsPolicy": {
+            "id": "CloudWatchMetricsPolicy",
+            "path": "VideoContentModeration/CloudWatchMetricsPolicy",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "VideoContentModeration/CloudWatchMetricsPolicy/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                  "aws:cdk:cloudformation:props": {
+                    "policyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "cloudwatch:PutMetricData",
+                          "Effect": "Allow",
+                          "Resource": "*"
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "policyName": "CloudWatchMetricsPolicyA3A9EE8C",
+                    "roles": [
+                      {
+                        "Ref": "GetResultsFunctionServiceRole14B0392F"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Policy",
+              "version": "2.49.0"
+            }
+          },
+          "BucketNotificationsHandler050a0587b7544547bf325f094a3db834": {
+            "id": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
+            "path": "VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.49.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "s3:PutBucketNotification",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36",
+                            "roles": [
+                              {
+                                "Ref": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.49.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.49.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.49.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.144"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "VideoContentModeration/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "VideoContentModeration/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.49.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "VideoContentModeration/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.49.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.144"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.49.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.49.0"
+    }
+  }
+}

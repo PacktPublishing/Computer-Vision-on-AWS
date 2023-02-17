@@ -1,0 +1,156 @@
+{
+    "TrainingJobName": "hotdog-nothotdog",
+    "TrainingJobArn": "arn:aws:sagemaker:us-east-2:your-accountid-here:training-job/hotdog-nothotdog",
+    "TrainingJobStatus": "InProgress",
+    "SecondaryStatus": "Training",
+    "HyperParameters": {
+        "beta_1": "0.9",
+        "beta_2": "0.999",
+        "checkpoint_frequency": "1",
+        "early_stopping": "false",
+        "early_stopping_min_epochs": "10",
+        "early_stopping_patience": "5",
+        "early_stopping_tolerance": "0.0",
+        "epochs": "30",
+        "eps": "1e-8",
+        "gamma": "0.9",
+        "image_shape": "3,224,224",
+        "learning_rate": "0.1",
+        "lr_scheduler_factor": "0.1",
+        "mini_batch_size": "32",
+        "momentum": "0.9",
+        "multi_label": "0",
+        "num_classes": "2",
+        "num_layers": "152",
+        "num_training_samples": "3000",
+        "optimizer": "sgd",
+        "precision_dtype": "float32",
+        "use_pretrained_model": "0",
+        "use_weighted_loss": "0",
+        "weight_decay": "0.0001"
+    },
+    "AlgorithmSpecification": {
+        "TrainingImage": "825641698319.dkr.ecr.us-east-2.amazonaws.com/image-classification:1",
+        "TrainingInputMode": "File",
+        "MetricDefinitions": [
+            {
+                "Name": "train:accuracy",
+                "Regex": "Epoch\\S* Train-accuracy=(\\S*)"
+            },
+            {
+                "Name": "validation:accuracy",
+                "Regex": "Epoch\\S* Validation-accuracy=(\\S*)"
+            },
+            {
+                "Name": "train:accuracy:epoch",
+                "Regex": "Epoch\\S* Train-accuracy=(\\S*)"
+            },
+            {
+                "Name": "validation:accuracy:epoch",
+                "Regex": "Epoch\\S* Validation-accuracy=(\\S*)"
+            }
+        ],
+        "EnableSageMakerMetricsTimeSeries": false
+    },
+    "RoleArn": "arn:aws:iam::your-accountid-here:role/service-role/AmazonSageMaker-ExecutionRole-20220322T125487",
+    "InputDataConfig": [
+        {
+            "ChannelName": "train",
+            "DataSource": {
+                "S3DataSource": {
+                    "S3DataType": "S3Prefix",
+                    "S3Uri": "s3://ch10-cv-book-use2/sagemaker/hotdog-nothotdog/train",
+                    "S3DataDistributionType": "FullyReplicated"
+                }
+            },
+            "ContentType": "application/x-image",
+            "CompressionType": "None",
+            "RecordWrapperType": "None",
+            "InputMode": "File"
+        },
+        {
+            "ChannelName": "validation",
+            "DataSource": {
+                "S3DataSource": {
+                    "S3DataType": "S3Prefix",
+                    "S3Uri": "s3://ch10-cv-book-use2/sagemaker/hotdog-nothotdog/test",
+                    "S3DataDistributionType": "FullyReplicated"
+                }
+            },
+            "ContentType": "application/x-image",
+            "CompressionType": "None",
+            "RecordWrapperType": "None",
+            "InputMode": "File"
+        },
+        {
+            "ChannelName": "train_lst",
+            "DataSource": {
+                "S3DataSource": {
+                    "S3DataType": "S3Prefix",
+                    "S3Uri": "s3://ch10-cv-book-use2/sagemaker/hotdog-nothotdog/train.lst",
+                    "S3DataDistributionType": "FullyReplicated"
+                }
+            },
+            "ContentType": "application/x-image",
+            "CompressionType": "None",
+            "RecordWrapperType": "None",
+            "InputMode": "File"
+        },
+        {
+            "ChannelName": "validation_lst",
+            "DataSource": {
+                "S3DataSource": {
+                    "S3DataType": "S3Prefix",
+                    "S3Uri": "s3://ch10-cv-book-use2/sagemaker/hotdog-nothotdog/validation.lst",
+                    "S3DataDistributionType": "FullyReplicated"
+                }
+            },
+            "ContentType": "application/x-image",
+            "CompressionType": "None",
+            "RecordWrapperType": "None",
+            "InputMode": "File"
+        }
+    ],
+    "OutputDataConfig": {
+        "KmsKeyId": "",
+        "S3OutputPath": "s3://ch10-cv-book-use2/sagemaker/output/hotdog-nothotdog/"
+    },
+    "ResourceConfig": {
+        "InstanceType": "ml.p2.xlarge",
+        "InstanceCount": 1,
+        "VolumeSizeInGB": 1
+    },
+    "StoppingCondition": {
+        "MaxRuntimeInSeconds": 86400
+    },
+    "CreationTime": 1675630573.55,
+    "TrainingStartTime": 1675630711.093,
+    "LastModifiedTime": 1675630847.642,
+    "SecondaryStatusTransitions": [
+        {
+            "Status": "Starting",
+            "StartTime": 1675630573.55,
+            "EndTime": 1675630711.093,
+            "StatusMessage": "Preparing the instances for training"
+        },
+        {
+            "Status": "Downloading",
+            "StartTime": 1675630711.093,
+            "EndTime": 1675630756.637,
+            "StatusMessage": "Downloading input data"
+        },
+        {
+            "Status": "Training",
+            "StartTime": 1675630756.637,
+            "StatusMessage": "Training image download completed. Training in progress."
+        }
+    ],
+    "EnableNetworkIsolation": false,
+    "EnableInterContainerTrafficEncryption": false,
+    "EnableManagedSpotTraining": false,
+    "CheckpointConfig": {
+        "S3Uri": "s3://ch10-cv-book-use2/sagemaker/checkpoint/hotdog-nothotdog.checkpoint"
+    },
+    "TrainingTimeInSeconds": 140,
+    "ProfilingStatus": "Disabled"
+}

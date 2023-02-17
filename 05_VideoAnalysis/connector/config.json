@@ -1,0 +1,20 @@
+{
+  "192.168.0.70": {
+    "base_name": "moonbase.cameras.real.world",
+    "secret": "homenet-hybrid-moonbase-connection-secret",
+    "cameras": [
+      "live0",
+      "live1",
+      "live2"
+    ]
+  },
+  "192.168.0.29": {
+    "base_name":"starbase.cameras.real.world",
+    "secret": "homenet-hybrid-starbase-connection-secret",
+    "cameras": [
+      "live0",
+      "live1",
+      "live2"
+    ]
+  }
+}
