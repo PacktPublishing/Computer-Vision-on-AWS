@@ -1,0 +1,19 @@
+{
+  "version": "21.0.0",
+  "files": {
+    "17ce592ed6b614b8673c04f3fc0d11fb6ccd844a753ef5f8119e7c52edd65828": {
+      "source": {
+        "path": "VideoContentModeration.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "17ce592ed6b614b8673c04f3fc0d11fb6ccd844a753ef5f8119e7c52edd65828.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

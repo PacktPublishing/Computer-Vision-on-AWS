@@ -1,0 +1,214 @@
+{
+  "version": "21.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "VideoContentModeration.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "VideoContentModeration.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "VideoContentModeration": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "VideoContentModeration.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/17ce592ed6b614b8673c04f3fc0d11fb6ccd844a753ef5f8119e7c52edd65828.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "VideoContentModeration.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "VideoContentModeration.assets"
+      ],
+      "metadata": {
+        "/VideoContentModeration/Bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Bucket83908E77"
+          }
+        ],
+        "/VideoContentModeration/Bucket/Notifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotifications8F2E257D"
+          }
+        ],
+        "/VideoContentModeration/Bucket/AllowBucketNotificationsToVideoContentModerationStartAnalysisFunctionD5F4D973": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketAllowBucketNotificationsToVideoContentModerationStartAnalysisFunctionD5F4D9739DF18EC3"
+          }
+        ],
+        "/VideoContentModeration/Topic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TopicBFC7AF6E"
+          }
+        ],
+        "/VideoContentModeration/AuditQueue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuditQueue1D3C234B"
+          }
+        ],
+        "/VideoContentModeration/AuditQueue/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuditQueuePolicyAD440BFB"
+          }
+        ],
+        "/VideoContentModeration/AuditQueue/VideoContentModerationTopicBBBE81C3/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuditQueueVideoContentModerationTopicBBBE81C367E0B219"
+          }
+        ],
+        "/VideoContentModeration/RekognitionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RekognitionRole7EFA3C18"
+          }
+        ],
+        "/VideoContentModeration/RekognitionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RekognitionRoleDefaultPolicyDCAE9C8E"
+          }
+        ],
+        "/VideoContentModeration/StartAnalysisFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StartAnalysisFunctionServiceRole723CB268"
+          }
+        ],
+        "/VideoContentModeration/StartAnalysisFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StartAnalysisFunctionServiceRoleDefaultPolicy0BECB2A7"
+          }
+        ],
+        "/VideoContentModeration/StartAnalysisFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StartAnalysisFunction605FCF41"
+          }
+        ],
+        "/VideoContentModeration/GetResultsFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetResultsFunctionServiceRole14B0392F"
+          }
+        ],
+        "/VideoContentModeration/GetResultsFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetResultsFunctionServiceRoleDefaultPolicyCC07E8D1"
+          }
+        ],
+        "/VideoContentModeration/GetResultsFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetResultsFunction4147919F"
+          }
+        ],
+        "/VideoContentModeration/GetResultsFunction/AllowInvoke:VideoContentModerationTopicBBBE81C3": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetResultsFunctionAllowInvokeVideoContentModerationTopicBBBE81C3431FCD3D"
+          }
+        ],
+        "/VideoContentModeration/GetResultsFunction/Topic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetResultsFunctionTopic2EED070E"
+          }
+        ],
+        "/VideoContentModeration/NotificationChannel_RoleArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NotificationChannelRoleArn"
+          }
+        ],
+        "/VideoContentModeration/NotificationChannelSNSTopicArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NotificationChannelSNSTopicArn"
+          }
+        ],
+        "/VideoContentModeration/VideoBucket": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VideoBucket"
+          }
+        ],
+        "/VideoContentModeration/CloudWatchMetricsPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudWatchMetricsPolicyA3A9EE8C"
+          }
+        ],
+        "/VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+          }
+        ],
+        "/VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36"
+          }
+        ],
+        "/VideoContentModeration/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691"
+          }
+        ],
+        "/VideoContentModeration/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/VideoContentModeration/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/VideoContentModeration/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/VideoContentModeration/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "VideoContentModeration"
+    }
+  }
+}

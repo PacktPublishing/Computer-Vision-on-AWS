@@ -1,0 +1,18 @@
+{
+  "moonbase.cameras.real.world": {
+    "secret": "homenet-hybrid-moonbase-connection-secret",
+    "cameras": [
+      "live0",
+      "live1",
+      "live2"
+    ]
+  },
+  "starbase.cameras.real.world": {
+    "secret": "homenet-hybrid-starbase-connection-secret",
+    "cameras": [
+      "live0",
+      "live1",
+      "live2"
+    ]
+  }
+}

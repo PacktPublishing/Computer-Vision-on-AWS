@@ -1,0 +1,9 @@
+[Unit]
+Description=HomeNet RTSP connector service
+After=docker.service
+
+[Service]
+ExecStart=/app/run-connector.sh
+
+[Install]
+WantedBy=default.target

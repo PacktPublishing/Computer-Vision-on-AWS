@@ -1,0 +1,3 @@
+{
+    "Policy": "{\n    \"Statement\": [\n      {\n        \"Effect\": \"Allow\",\n        \"Principal\": {\n          \"Service\": \"sns.amazonaws.com\"\n        },\n        \"Action\": \"sqs:SendMessage\",\n        \"Resource\": \"arn:aws:sqs:*:*:*PersonTracking*\",\n        \"Condition\": {\n          \"ArnEquals\": {\n            \"aws:SourceArn\": \"arn:aws:sns:*:*:*PersonTracking*\"\n          }\n        }\n      }\n    ]\n}"
+}
