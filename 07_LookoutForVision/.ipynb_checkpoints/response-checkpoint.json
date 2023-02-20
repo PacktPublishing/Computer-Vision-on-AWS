@@ -1,9 +1,0 @@
-{
-    "DetectAnomalyResult": {
-        "Source": {
-            "Type": "direct"
-        },
-        "IsAnomalous": false,
-        "Confidence": 0.7335836887359619
-    }
-}
