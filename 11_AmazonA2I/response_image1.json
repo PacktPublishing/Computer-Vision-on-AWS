@@ -1,0 +1,19 @@
+{
+    "ModerationLabels": [
+        {
+            "Confidence": 97.1685562133789,
+            "Name": "Alcoholic Beverages",
+            "ParentName": "Alcohol"
+        },
+        {
+            "Confidence": 97.1685562133789,
+            "Name": "Alcohol",
+            "ParentName": ""
+        }
+    ],
+    "ModerationModelVersion": "6.0",
+    "HumanLoopActivationOutput": {
+        "HumanLoopActivationReasons": [],
+        "HumanLoopActivationConditionsEvaluationResults": "{\"Conditions\":[{\"And\":[{\"ConditionType\":\"ModerationLabelConfidenceCheck\",\"ConditionParameters\":{\"ModerationLabelName\":\"*\",\"ConfidenceLessThan\":95.0},\"EvaluationResult\":false},{\"ConditionType\":\"ModerationLabelConfidenceCheck\",\"ConditionParameters\":{\"ModerationLabelName\":\"*\",\"ConfidenceGreaterThan\":0.0},\"EvaluationResult\":true}],\"EvaluationResult\":false}]}"
+    }
+}
