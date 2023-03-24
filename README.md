@@ -1,1 +1,1 @@
-# Computer Vision using AWS AI Services
+# Computer Vision on AWS
