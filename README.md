@@ -30,8 +30,9 @@ All of the code is organized into folders.
 The code will look like the following:
 ```
 {
-"SubscriptionArn": "arn:aws:sns:region:account:AmazonRekognitionPersonTrackingTopic:04877b15-7c19-4ce5-b958-969c5b9a1ecb"
-}```
+    "SubscriptionArn": "arn:aws:sns:region:account:AmazonRekognitionPersonTrackingTopic:04877b15-7c19-4ce5-b958-969c5b9a1ecb"
+}
+```
 
 **Following is what you need for this book:**
 If you are a machine learning engineer or data scientist looking to discover best practices and learn how to build comprehensive CV solutions on AWS, this book is for you. Knowledge of AWS basics is required to grasp the concepts covered in this book more effectively. A solid understanding of machine learning concepts and the Python programming language will also be beneficial.	
