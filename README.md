@@ -1,8 +1,8 @@
 # Computer Vision on AWS
 
-<a href="<Packtpub book link>?utm_source=github&utm_medium=repository&utm_campaign=<13-P ISBN>"><img src="https://static.packt-cdn.com/products/<13-P ISBN>/cover/smaller" alt="Computer Vision on AWS" height="256px" align="right"></a>
+<a href="https://www.amazon.in/Computer-Vision-using-AWS-services/dp/1801078688/ref=sr_1_1?crid=3PP65Q6DWA62X&keywords=computer+vision+on+aws+book&qid=1680240266&sprefix=computer+vision+on+aws+book%2Caps%2C212&sr=8-1"><img src="https://m.media-amazon.com/images/I/41xTi5owBiL._SX403_BO1,204,203,200_.jpg" alt="Computer Vision on AWS" height="256px" align="right"></a>
 
-This is the code repository for [Computer Vision on AWS](<Packtpub book link>?utm_source=github&utm_medium=repository&utm_campaign=<13-P ISBN>), published by Packt.
+This is the code repository for [Computer Vision on AWS](https://www.amazon.in/Computer-Vision-using-AWS-services/dp/1801078688/ref=sr_1_1?crid=3PP65Q6DWA62X&keywords=computer+vision+on+aws+book&qid=1680240266&sprefix=computer+vision+on+aws+book%2Caps%2C212&sr=8-1), published by Packt.
 
 **Build and deploy real-world CV solutions with Amazon Rekognition, Lookout for Vision, and SageMaker**
 
