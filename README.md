@@ -51,7 +51,7 @@ With the following software and hardware list you can run all code files present
 
 * 3D Deep Learning with Python [[Packt]](https://www.packtpub.com/product/3d-deep-learning-with-python/9781803247823#_ga=2.200559406.1484471424.1680154591-1347501151.1654864057) [[Amazon]](https://www.amazon.com/3D-Deep-Learning-Python-PyTorch3D/dp/1803247827)
 
-## Get to Know the Author(s)
+## Get to Know the Authors
 **Lauren Mullennex** is a Senior AI/ML Specialist Solutions Architect at AWS. She has broad experience in infrastructure, DevOps, and cloud architecture across multiple industries. She has published multiple AWS AI/ML blogs, spoken at AWS conferences, and focuses on developing solutions using CV and MLOps.
 
 **Nate Bachmeier** is a Principal Solutions Architect at AWS (Ph.D. CS, MBA). He nomadically explores the world one cloud integration at a time, focusing on the Financial Service industry.
